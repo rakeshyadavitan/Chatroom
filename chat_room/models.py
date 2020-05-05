@@ -12,7 +12,7 @@ class Room(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.message
+        return self.name
 
     class Meta:
         ordering = ('timestamp',)
