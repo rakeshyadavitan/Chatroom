@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
     #The ModelSerializer class provides a shortcut that lets you automatically create a Serializer class with
     # fields that correspond to the Model fields.
     password = serializers.CharField(write_only=True)
-    #password is specified write_only to avoid gettting the password displayed on GET request
+    #password is specified write_only to avoid getting the password displayed on GET request
     class Meta:
         model = User
         fields = ['username', 'password']
@@ -24,5 +24,5 @@ class RoomSerializer(serializers.ModelSerializer):
     # The 'queryset' argument takes the list of objects from which the related object is to be chosen.
     member = serializers.SlugRelatedField(many=True, slug_field='username', queryset=User.objects.all())
     class Meta:
-        model = Message
+        model = Room
         fields = ['owner', 'member', 'name', 'timestamp']
