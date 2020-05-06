@@ -31,7 +31,7 @@ def user_list(request, pk=None):
         return JsonResponse(serializer.errors, status=400)     # Return back the errors  if not valid
 
 @csrf_exempt
-def room_list(request, sender=None, receiver=None):
+def room_list(request, owner=None, member=None):
     # List all required room, or create a new room.
     if request.method == 'GET':
         rooms = Room.objects.filter(owner_id=owner, member_id=member)
