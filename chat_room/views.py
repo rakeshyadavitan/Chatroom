@@ -10,6 +10,11 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from chat_room.models import Room  # Our Room model
 from chat_room.serializers import RoomSerializer, UserSerializer # Our Serializer Classes
+from rest_framework.viewsets import ViewSet
+
+
+# Create your views here.
+class RoomViewSet(ViewSet):
 
 # Users View
 @csrf_exempt # Decorator to make the view csrf excempt.
@@ -40,6 +45,16 @@ def room_list(request, sender=None, receiver=None):
     elif request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = RoomSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+def join_room(request, room_timestamp):
+    if request.method == 'PUT':
+        data = JSONParser().parse(request)
+        room = Room.objects.filter(timestamp=room_timestamp)
+        serializer = RoomSerializer(room, data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
