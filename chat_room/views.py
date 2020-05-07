@@ -38,6 +38,8 @@ def room_list(request, owner=None, member=None):
         # rooms = Room.objects.filter(owner_id=owner, member_id=member)
         rooms = Room.objects.all() #get all rooms lists
         serializer = RoomSerializer(rooms, many=True, context={'request': request})
+        print('----------------')
+        print(serializer.data)
         return JsonResponse(serializer.data, safe=False)
     elif request.method == 'POST':
         data = JSONParser().parse(request)
