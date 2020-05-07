@@ -11,6 +11,7 @@ from rest_framework.parsers import JSONParser
 from chat_room.models import Room  # Our Room model
 from chat_room.serializers import RoomSerializer, UserSerializer # Our Serializer Classes
 
+
 # Users View
 @csrf_exempt # Decorator to make the view csrf excempt.
 def user_list(request, pk=None):
@@ -41,6 +42,17 @@ def room_list(request, owner=None, member=None):
     elif request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = RoomSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+@csrf_exempt
+def join_room(request, room_timestamp): # Join room based on the timestamp of the created room
+    if request.method == 'PUT':
+        data = JSONParser().parse(request)
+        room = Room.objects.filter(timestamp=room_timestamp)
+        serializer = RoomSerializer(room, data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
