@@ -22,7 +22,10 @@ class RoomSerializer(serializers.ModelSerializer):
     # It also takes a 'many' argument which identifies the relation is many-to-many or not.
     # We gave it false, since a room can only contain a single owner.
     # The 'queryset' argument takes the list of objects from which the related object is to be chosen.
-    member = serializers.SlugRelatedField(many=False, slug_field='username', queryset=User.objects.all())
+    member = serializers.SlugRelatedField(many=True, slug_field='username', queryset=User.objects.all())
+    print('---------------99999')
+    print(member)
+
     class Meta:
         model = Room
         fields = ['owner', 'member', 'name', 'timestamp']

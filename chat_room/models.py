@@ -10,10 +10,21 @@ class Room(models.Model):
     member = models.ForeignKey(User, on_delete=models.CASCADE, related_name='member') # implement one to many
     name = models.CharField(max_length=1200)
     timestamp = models.DateTimeField(auto_now_add=True, primary_key=True)
-    # field to handle image
+    # upload_image = models.ImageField()
 
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ('timestamp',)
+
+# class Member(models.Model):
+#     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='room')
+#     member = models.ForeignKey(User, on_delete=models.CASCADE, related_name='member')
+#     timestamp = models.DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return self.member
+#
+#     class Meta:
+#         ordering = ('timestamp',)

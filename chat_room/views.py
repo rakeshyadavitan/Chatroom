@@ -37,7 +37,7 @@ def room_list(request, owner=None, member=None):
     if request.method == 'GET':
         # rooms = Room.objects.filter(owner_id=owner, member_id=member)
         rooms = Room.objects.all() #get all rooms lists
-        serializer = RoomSerializer(rooms, many=True, context={'request': request})
+        serializer = RoomSerializer(rooms, many=False, context={'request': request})
         print('----------------')
         print(serializer.data)
         return JsonResponse(serializer.data, safe=False)
