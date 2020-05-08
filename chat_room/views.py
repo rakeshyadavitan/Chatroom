@@ -35,8 +35,11 @@ def user_list(request, pk=None):
 def room_list(request, owner=None, member=None):
     # List all required room, or create a new room.
     if request.method == 'GET':
-        rooms = Room.objects.filter(owner_id=owner, member_id=member)
+        # rooms = Room.objects.filter(owner_id=owner, member_id=member)
+        rooms = Room.objects.all() #get all rooms lists
         serializer = RoomSerializer(rooms, many=True, context={'request': request})
+        print('----------------')
+        print(serializer.data)
         return JsonResponse(serializer.data, safe=False)
     elif request.method == 'POST':
         data = JSONParser().parse(request)
