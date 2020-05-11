@@ -1,4 +1,4 @@
-#!/home/rakesh/Workspace/Learning/python/ChatApp/chat-env/bin/python
+#!/home/rakesh/Workspace/Learning/python/Chatroom/chat-env/bin/python
 
 import sys
 import getopt
