@@ -50,10 +50,18 @@ def room_list(request, owner=None, member=None):
         return JsonResponse(serializer.errors, status=400)
 
 @csrf_exempt
-def join_room(request, room_timestamp): # Join room based on the timestamp of the created room
+def join_room(request, room_id): # Join room based on the room id of the created room
     if request.method == 'PUT':
         data = JSONParser().parse(request)
-        room = Room.objects.filter(timestamp=room_timestamp)
+        try:
+            room = Room.objects.filter(id=room_id)
+        except Exception as e:
+            return JsonResponse({'message': 'Room does not exist.',
+                                 'details': str(e)})
+
+        user = request.user
+        room.members.add(user)
+        room.save()
         serializer = RoomSerializer(room, data=data)
         if serializer.is_valid():
             serializer.save()
